@@ -65,6 +65,7 @@ CRATER_PENALTY = -100.0
 GOAL_REWARD = 500.0
 TIMEOUT_PENALTY = -50.0
 STEP_PENALTY = -1.0
+SAFE_STEP_BONUS = 1.0  # cancels STEP_PENALTY on safe steps - see step()
 DISTANCE_PROGRESS_WEIGHT = 0.5
 GOAL_RADIUS = 5.0
 
@@ -200,7 +201,7 @@ class LunarEnvironment:
             reward = TIMEOUT_PENALTY
             done = True
         else:
-            reward = STEP_PENALTY + DISTANCE_PROGRESS_WEIGHT * progress
+            reward = STEP_PENALTY + SAFE_STEP_BONUS + DISTANCE_PROGRESS_WEIGHT * progress
 
         info = {
             "steps": self.steps_taken,
